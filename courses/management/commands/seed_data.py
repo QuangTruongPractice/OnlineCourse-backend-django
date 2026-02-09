@@ -24,7 +24,7 @@ class Command(BaseCommand):
                 'email': 'teacher1@example.com',
                 'first_name': 'Teacher',
                 'last_name': 'One',
-                'userRole': role_objects['Teacher'],
+                'user_role': role_objects['Teacher'],
                 'password': make_password('123456')
             }
         )

@@ -16,9 +16,9 @@ class CoursePermissionTests(TestCase):
         self.student_role, _ = Role.objects.get_or_create(name='Student')
         
         # Users
-        self.admin = User.objects.create(username='admin', email='admin@test.com', userRole=self.admin_role)
-        self.teacher = User.objects.create(username='teacher', email='teacher@test.com', userRole=self.teacher_role)
-        self.student = User.objects.create(username='student', email='student@test.com', userRole=self.student_role)
+        self.admin = User.objects.create(username='admin', email='admin@test.com', user_role=self.admin_role)
+        self.teacher = User.objects.create(username='teacher', email='teacher@test.com', user_role=self.teacher_role)
+        self.student = User.objects.create(username='student', email='student@test.com', user_role=self.student_role)
         
         # Category
         self.category = Category.objects.create(name='Test Category')
@@ -66,7 +66,7 @@ class LessonTests(TestCase):
     def setUp(self):
         self.client = APIClient()
         self.teacher_role, _ = Role.objects.get_or_create(name='Teacher')
-        self.teacher = User.objects.create(username='teacher_lesson', userRole=self.teacher_role)
+        self.teacher = User.objects.create(username='teacher_lesson', user_role=self.teacher_role)
         self.course = Course.objects.create(name='Lesson Course', lecturer=self.teacher)
         self.chapter = Chapter.objects.create(course=self.course, name='Chapter 1')
 
@@ -88,7 +88,7 @@ class PaymentTests(TestCase):
     def setUp(self):
         self.client = APIClient()
         self.student_role, _ = Role.objects.get_or_create(name='Student')
-        self.student = User.objects.create(username='student_pay', userRole=self.student_role)
+        self.student = User.objects.create(username='student_pay', user_role=self.student_role)
         self.course = Course.objects.create(name='Paid Course', price=50000)
 
     @patch('courses.services.momo.requests.post')
@@ -123,8 +123,8 @@ class PaymentTests(TestCase):
 class ModelLogicTests(TestCase):
     def test_user_role_assignment(self):
         role, _ = Role.objects.get_or_create(name='Tester')
-        user = User.objects.create(username='u1', userRole=role)
-        self.assertEqual(user.userRole.name, 'Tester')
+        user = User.objects.create(username='u1', user_role=role)
+        self.assertEqual(user.user_role.name, 'Tester')
 
 
 class GoogleLoginTests(TestCase):
@@ -159,4 +159,4 @@ class GoogleLoginTests(TestCase):
         # Check if user was created
         user = User.objects.get(email='googleuser@example.com')
         self.assertEqual(user.first_name, 'Google')
-        self.assertEqual(user.userRole.name, 'Student')
+        self.assertEqual(user.user_role.name, 'Student')

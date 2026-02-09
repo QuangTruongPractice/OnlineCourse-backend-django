@@ -14,8 +14,8 @@ class RoleAdmin(admin.ModelAdmin):
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
-    list_display = ("id", "username", 'avatar', "email", "first_name", "last_name", "phone", "userRole", "is_active", "is_staff")
-    list_filter = ("is_active", "is_staff", "userRole")
+    list_display = ("id", "username", 'avatar', "email", "first_name", "last_name", "phone", "user_role", "is_active", "is_staff")
+    list_filter = ("is_active", "is_staff", "user_role")
     search_fields = ("username", "email", "first_name", "last_name")
 
 

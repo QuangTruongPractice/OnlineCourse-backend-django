@@ -43,7 +43,7 @@ class User(AbstractUser):
     introduce = models.CharField(max_length=255, null=True, blank=True)
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
-    userRole = models.ForeignKey(Role, on_delete=models.SET_NULL, null=True, blank=True)
+    user_role = models.ForeignKey(Role, on_delete=models.SET_NULL, null=True, blank=True)
 
 
 class Permission(BaseModel):

@@ -111,7 +111,7 @@ class UserRegistrationSerializer(BaseSerializer):
     class Meta:
         model = User
         fields = ('username', 'password', 'confirm_password', 'email',
-                  'first_name', 'last_name', 'avatar', 'address', 'introduce', 'phone', 'userRole')
+                  'first_name', 'last_name', 'avatar', 'address', 'introduce', 'phone', 'user_role')
 
     def validate(self, attrs):
         if attrs['password'] != attrs['confirm_password']:
@@ -162,17 +162,17 @@ class UserUpdateSerializer(BaseSerializer):
 
 class UserSerializer(BaseSerializer):
     avatar = serializers.SerializerMethodField()
-    userRole = serializers.SerializerMethodField(read_only=True)
+    user_role = serializers.SerializerMethodField(read_only=True)
     date_joined = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = User
         fields = ('id', 'username', 'email', 'first_name', 'last_name',
-                  'avatar', 'address', 'introduce', 'phone', 'date_joined', 'userRole', 'is_active')
+                  'avatar', 'address', 'introduce', 'phone', 'date_joined', 'user_role', 'is_active')
         read_only_fields = ('id', 'date_joined')
 
-    def get_userRole(self, obj):
-        return obj.userRole.name if obj.userRole else None
+    def get_user_role(self, obj):
+        return obj.user_role.name if obj.user_role else None
 
     def get_date_joined(self, obj):
         return obj.date_joined.strftime("%d-%m-%Y")
@@ -315,15 +315,15 @@ class CommentSerializer(serializers.ModelSerializer, UserNameMixin):
 
 
 class LecturerSerializer(serializers.ModelSerializer):
-    userRole = serializers.SerializerMethodField(read_only=True)
+    user_role = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = User
         fields = ['id', 'username', 'email', 'first_name', 'last_name', 'avatar', 'address', 'introduce', 'phone',
-                  'date_joined', 'userRole', 'is_active']
+                  'date_joined', 'user_role', 'is_active']
 
-    def get_userRole(self, obj):
-        return obj.userRole.name if obj.userRole else None
+    def get_user_role(self, obj):
+        return obj.user_role.name if obj.user_role else None
 
     def get_avatar(self, obj):
         if obj.avatar:

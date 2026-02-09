@@ -31,7 +31,7 @@ class CategoryViewSet(viewsets.ViewSet, generics.ListAPIView):
 
 
 class TeacherViewSet(viewsets.ViewSet, generics.ListAPIView):
-    queryset = User.objects.filter(userRole__name__iexact="Teacher")
+    queryset = User.objects.filter(user_role__name__iexact="Teacher")
     serializer_class = serializers.TeacherSerializer
 
 
@@ -111,7 +111,7 @@ class CourseViewSet(viewsets.ModelViewSet):
         try:
             course = self.get_object()
             # Optimize queries with select_related and prefetch_related
-            course = Course.objects.select_related('lecturer', 'lecturer__userRole', 'category').prefetch_related(
+            course = Course.objects.select_related('lecturer', 'lecturer__user_role', 'category').prefetch_related(
                 'chapters__lessons__documents'
             ).get(pk=pk)
 
@@ -173,7 +173,7 @@ class UserViewSet(viewsets.ViewSet, generics.CreateAPIView):
     def register_student(self, request):
         data = request.data.copy()
         student_role = get_object_or_404(Role, name="Student")
-        data['userRole'] = student_role.pk
+        data['user_role'] = student_role.pk
         serializer = self.get_serializer(data=data)
         if serializer.is_valid():
             user = serializer.save()
@@ -190,7 +190,7 @@ class UserViewSet(viewsets.ViewSet, generics.CreateAPIView):
     def register_teacher(self, request):
         data = request.data.copy()
         teacher_role = get_object_or_404(Role, name="Teacher")
-        data['userRole'] = teacher_role.pk
+        data['user_role'] = teacher_role.pk
         serializer = self.get_serializer(data=data)
         if serializer.is_valid():
             user = serializer.save()
