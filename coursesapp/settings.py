@@ -66,6 +66,13 @@ ROOT_URLCONF = 'coursesapp.urls'
 
 CORS_ALLOW_ALL_ORIGINS = True
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://onlinecourse-backend-django.onrender.com",
+    "https://online-course-frontend-nextjs-yrj4.vercel.app",
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+]
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',

@@ -85,6 +85,7 @@ class Command(BaseCommand):
                     "price": 500000,
                     "thumbnail_url": c_data["thumbnail"],
                     "image": c_data["thumbnail"],
+                    "video_url": c_data["chapters"][0]["video"],  # Gắn link youtube minh họa
                     "level": Course.Level.TRUNG_CAP,
                     "duration": 180
                 }

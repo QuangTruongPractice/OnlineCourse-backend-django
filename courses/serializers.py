@@ -389,6 +389,16 @@ class CourseDetailSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
+        request = self.context.get('request')
+        
+        # Check if user is enrolled or is lecturer
+        is_enrolled = self.get_is_enrolled(instance)
+        is_free = instance.price == 0
+        
+        # Hide chapters/lessons if not enrolled/lecturer AND not a free course
+        if not is_enrolled and not is_free:
+            data['chapters'] = []  # Hide lessons for paid courses if not enrolled
+            
         # Convert total dynamic duration to minutes
         data['duration'] = instance.total_duration
         # Add lessons count
