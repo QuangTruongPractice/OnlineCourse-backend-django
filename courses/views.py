@@ -115,7 +115,7 @@ class CourseViewSet(viewsets.ModelViewSet):
                 'chapters__lessons__documents'
             ).get(pk=pk)
 
-            serializer = serializers.CourseDetailSerializer(course)
+            serializer = serializers.CourseDetailSerializer(course, context={'request': request})
             return Response(serializer.data, status=status.HTTP_200_OK)
         except Course.DoesNotExist:
             return Response({"detail": "Course not found"}, status=status.HTTP_404_NOT_FOUND)
